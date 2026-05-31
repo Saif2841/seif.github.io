@@ -1,0 +1,44 @@
+---
+layout: archive
+---
+
+{{ content }}
+
+<!-- Tag names in ascending order -->
+{% assign tagNames = "" | split: "" %}
+{% for tag in site.tags %}
+  {% assign tagNames = tagNames | push: tag[0] %}
+{% endfor %}
+{% assign tagNames = tagNames | sort %}
+
+<!-- Render Tags -->
+<ul class="taxonomy__index">
+  {% for tagName in tagNames %}
+    {% for tag in site.tags %}
+      {% if tag[0] == tagName %}
+        <li>
+          <a href="#{{ tag[0] | slugify }}">
+            <strong>{{ tag[0] }}</strong> <span class="taxonomy__count">{{ tag[1] | size }}</span>
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</ul>
+
+<!-- Render Entries -->
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+{% for tagName in tagNames %}
+  {% for tag in site.tags %}
+    {% if tag[0] == tagName %}
+      <section id="{{ tag[0] | slugify | downcase }}" class="taxonomy__section">
+        <h2 class="archive__subtitle">{{ tag[0] }}</h2>
+        <div class="entries-{{ entries_layout }}">
+          {% for post in tag.last %}
+            {% include archive-single.html type=entries_layout %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  {% endfor %}
+{% endfor %}

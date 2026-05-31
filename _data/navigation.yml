@@ -1,0 +1,10 @@
+# main links
+main:
+  - title: "All"
+    url: /all
+  - title: "Web"
+    url: /web
+  - title: "Competitive Programming"
+    url: /competitive-programming
+  - title: "etc"
+    url: /etc
